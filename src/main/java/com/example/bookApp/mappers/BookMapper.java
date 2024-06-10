@@ -1,7 +1,6 @@
 package com.example.bookApp.mappers;
 
 import com.example.bookApp.dtos.BookDto;
-import com.example.bookApp.model.Author;
 import com.example.bookApp.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
