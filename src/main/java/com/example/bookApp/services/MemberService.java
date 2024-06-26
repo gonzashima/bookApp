@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -26,8 +27,9 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public List<Member> getMembers() {
-        return memberRepository.findAll();
+    public List<MemberOutDto> getMembers() {
+        List<Member> members = memberRepository.findAll();
+        return members.stream().map(memberOutMapper).collect(Collectors.toList());
     }
 
     public Member getMemberById(Long id) {
