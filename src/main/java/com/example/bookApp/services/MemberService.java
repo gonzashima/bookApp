@@ -2,6 +2,7 @@ package com.example.bookApp.services;
 
 import com.example.bookApp.dtos.MemberOutDto;
 import com.example.bookApp.dtos.MemberPostDto;
+import com.example.bookApp.dtos.MessageDto;
 import com.example.bookApp.mappers.MemberOutMapper;
 import com.example.bookApp.mappers.MemberPostMapper;
 import com.example.bookApp.model.Member;
@@ -32,12 +33,12 @@ public class MemberService {
         return members.stream().map(memberOutMapper).collect(Collectors.toList());
     }
 
-    public Member getMemberById(Long id) {
+    public MemberOutDto getMemberById(Long id) {
         Optional<Member> member = memberRepository.findById(id);
         if (member.isEmpty())
             throw new IllegalStateException("Member does not exist");
 
-        return member.get();
+        return memberOutMapper.apply(member.get());
     }
 
     public MemberOutDto createMember(MemberPostDto memberPostDto) {
@@ -45,6 +46,15 @@ public class MemberService {
         memberRepository.save(parsedMember);
 
         return memberOutMapper.apply(parsedMember);
+    }
+
+    public MessageDto deleteMemberById(Long id) {
+        Optional<Member> member = memberRepository.findById(id);
+        if (member.isEmpty())
+            throw new IllegalStateException("Member does not exist");
+
+        memberRepository.deleteById(id);
+        return new MessageDto("User with id: " + id + " deleted successfully");
     }
 
 }

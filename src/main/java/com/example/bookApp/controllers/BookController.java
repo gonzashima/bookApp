@@ -1,6 +1,7 @@
 package com.example.bookApp.controllers;
 
 import com.example.bookApp.dtos.AuthorDto;
+import com.example.bookApp.dtos.MessageDto;
 import com.example.bookApp.services.BookService;
 import com.example.bookApp.dtos.BookDto;
 import com.example.bookApp.dtos.UpdatePriceRequest;
@@ -43,8 +44,8 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBookById(@PathVariable Long id) {
-        bookService.deleteBookById(id);
+    public ResponseEntity<MessageDto> deleteBookById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookService.deleteBookById(id));
     }
 
     @PatchMapping("/{id}")
