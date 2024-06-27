@@ -48,6 +48,20 @@ public class MemberService {
         return memberOutMapper.apply(parsedMember);
     }
 
+    public MemberOutDto updateMember(Long id, MemberPostDto memberPostDto) {
+        Optional<Member> optional = memberRepository.findById(id);
+
+        if(optional.isEmpty())
+            throw new IllegalStateException("Member not found");
+
+        Member member = optional.get();
+        member.setEmail(memberPostDto.email());
+        member.setName(memberPostDto.name());
+        member.setPassword(memberPostDto.password());
+
+        return memberOutMapper.apply(memberRepository.saveAndFlush(member));
+    }
+
     public MessageDto deleteMemberById(Long id) {
         Optional<Member> member = memberRepository.findById(id);
         if (member.isEmpty())

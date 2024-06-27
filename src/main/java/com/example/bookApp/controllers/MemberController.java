@@ -3,7 +3,6 @@ package com.example.bookApp.controllers;
 import com.example.bookApp.dtos.MemberOutDto;
 import com.example.bookApp.dtos.MemberPostDto;
 import com.example.bookApp.dtos.MessageDto;
-import com.example.bookApp.model.Member;
 import com.example.bookApp.services.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,11 @@ public class MemberController {
     @PostMapping
     public ResponseEntity<MemberOutDto> createMember(@RequestBody @Valid MemberPostDto member) {
         return ResponseEntity.ok(memberService.createMember(member));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MemberOutDto> updateMember(@PathVariable Long id, @RequestBody @Valid MemberPostDto memberPostDto) {
+        return ResponseEntity.ok(memberService.updateMember(id, memberPostDto));
     }
 
     @DeleteMapping("/{id}")
