@@ -1,6 +1,7 @@
 package com.example.bookApp.controllers;
 
 import com.example.bookApp.dtos.AuthorDto;
+import com.example.bookApp.dtos.MessageDto;
 import com.example.bookApp.model.Author;
 import com.example.bookApp.services.AuthorService;
 import jakarta.validation.Valid;
@@ -37,8 +38,9 @@ public class AuthorController {
         return new ResponseEntity<>(authorService.addAuthor(authorDto), HttpStatus.CREATED);
     }
 
-    public void deleteAuthorById(@PathVariable Long id) {
-        authorService.deleteById(id);
+    @DeleteMapping
+    public ResponseEntity<MessageDto> deleteAuthorById(@PathVariable Long id) {
+        return ResponseEntity.ok(authorService.deleteById(id));
     }
 
 

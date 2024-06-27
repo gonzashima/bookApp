@@ -1,6 +1,7 @@
 package com.example.bookApp.services;
 
 import com.example.bookApp.dtos.AuthorDto;
+import com.example.bookApp.dtos.MessageDto;
 import com.example.bookApp.mappers.AuthorMapper;
 import com.example.bookApp.model.Author;
 import com.example.bookApp.repositories.AuthorRepository;
@@ -55,11 +56,12 @@ public class AuthorService {
             authorRepository.save(authorMapper.apply(authorDto));
     }
 
-    public void deleteById(Long id) {
+    public MessageDto deleteById(Long id) {
         if (!authorRepository.existsById(id))
             throw new IllegalStateException("Author does not exist");
 
         authorRepository.deleteById(id);
+        return new MessageDto("Author with id: " + id + " deleted successfully");
     }
 
 }

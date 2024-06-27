@@ -1,6 +1,7 @@
 package com.example.bookApp.services;
 
 import com.example.bookApp.dtos.AuthorDto;
+import com.example.bookApp.dtos.MessageDto;
 import com.example.bookApp.mappers.BookMapper;
 import com.example.bookApp.model.Author;
 import com.example.bookApp.repositories.BookRepository;
@@ -56,12 +57,13 @@ public class BookService {
         return bookRepository.save(book);
     }
 
-    public void deleteBookById(Long id) {
+    public MessageDto deleteBookById(Long id) {
         boolean exists = bookRepository.existsById(id);
         if (!exists)
             throw new IllegalStateException("Book does not exist");
 
         bookRepository.deleteById(id);
+        return new MessageDto("Book with id: " + id + " deleted successfully");
     }
 
     public Book setPriceById(Long id, BigDecimal price) {
