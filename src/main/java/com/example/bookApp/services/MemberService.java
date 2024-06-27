@@ -41,6 +41,10 @@ public class MemberService {
         return memberOutMapper.apply(member.get());
     }
 
+    public Optional<Member> getMemberByEmailAndPassword(String email, String password) {
+        return memberRepository.findByEmailAndPassword(email, password);
+    }
+
     public MemberOutDto createMember(MemberPostDto memberPostDto) {
         Member parsedMember = memberPostMapper.apply(memberPostDto);
         memberRepository.save(parsedMember);

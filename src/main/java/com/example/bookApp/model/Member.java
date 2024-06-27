@@ -1,33 +1,46 @@
 package com.example.bookApp.model;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
 public class Member {
 
     @Id
-    @SequenceGenerator(name = "member_sequence", sequenceName = "member_sequence")
+    @SequenceGenerator(name = "member_sequence", sequenceName = "member_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_sequence")
     @Column(updatable = false)
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
     @Column(nullable = false)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String password;
+    private String password;
+
+    @OneToMany(mappedBy = "member")
+    private Set<Loan> loans = new HashSet<>();
 
     public Member() {}
 
-    public Member(Long id, String name, String email, String password) {
+    public Member(Long id, String name, String email, String password, Set<Loan> loans) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.loans = loans;
+    }
+
+    public Member(String name, String email, String password, Set<Loan> loans) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.loans = loans;
     }
 
     public Member(String name, String email, String password) {
